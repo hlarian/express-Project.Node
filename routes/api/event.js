@@ -7,15 +7,12 @@ var { auth,
 } = require('../../functions/authentication');
 
 var Course = require('../../models/course.model');
-//var User = require('../../models/user.model');
 var Event = require('../../models/event.model');
 
-//var events = require('events');
-//var eventEmitter = new events.EventEmitter();
 
 router.post('/', auth, permit('teacher'), function (req, res) {
 
-     Course.findOne({ course_ID: req.body.course_ID }).then(async function (course) {
+    Course.findOne({ course_ID: req.body.course_ID }).then(async function (course) {
         if (req.user._id == course.teacher_ID) {
             var event = Event();
             event.eventName = req.body.eventName;
@@ -41,8 +38,29 @@ router.post('/', auth, permit('teacher'), function (req, res) {
 
 
 });
-// router.get('/:id', auth, permit('student'), function (req, res) {
+router.get('/:id', function (req, res) {
 
-// });
+    Course.findOne({ course_ID: req.params.id }).then(function (course) {
+
+        Event.find({ course_ID: course._id }).then(function (event) {
+            res.send({
+                status: "success",
+                data: event
+            })
+        }).catch(function (err) {
+            res.send({
+                status: "success",
+                error: err
+            })
+        });
+
+    }).catch(function (err) {
+        res.send({
+            status: "success",
+            error: err
+        })
+    });
+
+});
 
 module.exports = router;
