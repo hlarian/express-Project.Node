@@ -10,7 +10,7 @@ var eventSchema = new Schema({
     
     course_ID:{
         type: Schema.ObjectId,
-        ref: 'course',
+        ref:'course',
         required: true
     },
 
@@ -24,4 +24,4 @@ var eventSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('event', eventSchema);
+module.exports = moongose.model('event', eventSchema);

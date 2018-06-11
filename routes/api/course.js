@@ -1,10 +1,10 @@
 var express = require('express');
-var jwt = require('jsonwebtoken');
-var md5 = require('md5');
+//var jwt = require('jsonwebtoken');
+//var md5 = require('md5');
 var router = express.Router();
 var { auth,
     permit,
-    courseExist } = require('../../functions/authentication');
+} = require('../../functions/authentication');
 
 var Course = require('../../models/course.model');
 var User = require('../../models/user.model');
@@ -94,7 +94,7 @@ router.post('/', auth, permit('teacher'), async function (req, res) {
     }
 });
 
-router.post('/editName/:id',auth,permit('teacher'),function(req,res){
+router.post('/editName/:id', auth, permit('teacher'), function (req, res) {
     Course.findOne({ course_ID: req.params.id }, function (err, data) {
         if (err)
             return res.send({
@@ -103,7 +103,7 @@ router.post('/editName/:id',auth,permit('teacher'),function(req,res){
             });
         if (data)
             if (data.teacher_ID == req.user._id)
-                Course.update({ course_ID: req.params.id },{ $set:{courseName: req.body.courseName }}).then(function (course) {
+                Course.update({ course_ID: req.params.id }, { $set: { courseName: req.body.courseName } }).then(function (course) {
                     var id = req.params.id;
                     res.send({
                         status: 'success',
@@ -127,7 +127,7 @@ router.post('/editName/:id',auth,permit('teacher'),function(req,res){
     });
 });
 
-router.post('/changeTeacher/:id',auth,permit('teacher'),function(req,res){
+router.post('/changeTeacher/:id', auth, permit('teacher'), function (req, res) {
     Course.findOne({ course_ID: req.params.id }, function (err, data) {
         if (err)
             return res.send({
@@ -136,7 +136,7 @@ router.post('/changeTeacher/:id',auth,permit('teacher'),function(req,res){
             });
         if (data)
             if (data.teacher_ID == req.user._id)
-                Course.update({ course_ID: req.params.id },{ $set:{teacher_ID: req.body.teacher_ID }}).then(function (course) {
+                Course.update({ course_ID: req.params.id }, { $set: { teacher_ID: req.body.teacher_ID } }).then(function (course) {
                     var id = req.params.id;
                     res.send({
                         status: 'success',
