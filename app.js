@@ -37,5 +37,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-mongoose.connect('mongodb://admin:admin@192.168.189.51:27017/university?authSource=admin');
+mongoose.connect(require('./config').uri);
 module.exports = app;

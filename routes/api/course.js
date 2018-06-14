@@ -1,13 +1,11 @@
 var express = require('express');
-//var jwt = require('jsonwebtoken');
-//var md5 = require('md5');
 var router = express.Router();
 var { auth,
     permit,
 } = require('../../functions/authentication');
 
 var Course = require('../../models/course.model');
-var User = require('../../models/user.model');
+//var User = require('../../models/user.model');
 router.get('/:id', function (req, res) {
     Course.find({ 'course_ID': req.params.id }, 'courseName', function (err, data) {
         if (err)
